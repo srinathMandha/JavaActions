@@ -6,9 +6,9 @@ on:
       - main  # Trigger this workflow on pushes to the main branch
   workflow_dispatch:
     inputs:
-      file-content:
-        description: 'Content for the file to create'
-        required: true
+      package_to_deploy:
+        description: 'Path or content of the package to deploy'
+        required: false  # Optional input as an environment variable will be used
 
 jobs:
   deploy:
@@ -18,11 +18,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2  # Checkout your repository's code
 
-      - name: Prompt for input
+      - name: Set environment variable
         if: github.event_name == 'workflow_dispatch'
-        id: input
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          target_commitish: ${{ github.sha }}
-          input: file.yml
+        run: |
+          echo "PACKAGE_TO_DEPLOY=${{ github.event.inputs.package_to_deploy }}" >> $GITHUB_ENV
+
+      - name: Create deployment package
+        run: |
+          echo "${{ env.PACKAGE_TO_DEPLOY }}" > deployment_package.txt
+          cat deployment_package.txt  # Display the content of the deployment package for verification
