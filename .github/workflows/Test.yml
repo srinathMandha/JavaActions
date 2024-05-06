@@ -1,0 +1,28 @@
+name: AWS CodeDeploy Deployment
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on pushes to the main branch
+  workflow_dispatch:
+    inputs:
+      file-content:
+        description: 'Content for the file to create'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout your repository's code
+
+      - name: Prompt for input
+        if: github.event_name == 'workflow_dispatch'
+        id: input
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          target_commitish: ${{ github.sha }}
+          input: file.yml
