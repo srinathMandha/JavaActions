@@ -1,0 +1,10 @@
+name: Hello World from App1
+
+on:
+  workflow_call:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "👋 Hello from App1 Repo!"
