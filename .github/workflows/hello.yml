@@ -9,4 +9,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@4.2.2
+        with:
+           repository: ${{ github.repository }}
       - run: echo "👋 Hello from App1 Repo!"
