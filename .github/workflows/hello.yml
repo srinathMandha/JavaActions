@@ -17,3 +17,5 @@ jobs:
       - name: Set greeting message
         id: set-greeting
         run: echo "greeting=Hello from reusable workflow" >> "$GITHUB_OUTPUT"
+
+      - name: Intentionally fail the
