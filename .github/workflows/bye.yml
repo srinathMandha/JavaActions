@@ -1,0 +1,19 @@
+# JavaActions/.github/workflows/hello.yml
+name: Hello Workflow
+
+on:
+  workflow_call:
+    outputs:
+      message:
+        description: "The greeting message"
+        value: ${{ jobs.say-hello.outputs.greeting }}
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    outputs:
+      greeting: ${{ steps.set-greeting.outputs.greeting }}
+    steps:
+      - name: Set greeting message
+        id: set-greeting
+        run: echo "greeting=Hello from reusable workflow" >> "$GITHUB_OUTPUT"
