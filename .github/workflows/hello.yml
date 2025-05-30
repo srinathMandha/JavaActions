@@ -18,4 +18,7 @@ jobs:
         id: set-greeting
         run: echo "greeting=Hello from reusable workflow" >> "$GITHUB_OUTPUT"
 
-      - name: Intentionally fail the
+      - name: Intentionally fail the job
+        run: |
+          echo "This job will now fail intentionally."
+          exit 1
