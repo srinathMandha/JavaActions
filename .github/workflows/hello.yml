@@ -1,14 +1,19 @@
-name: Hello World from App1
+# JavaActions/.github/workflows/hello.yml
+name: Hello Workflow
 
 on:
   workflow_call:
+    outputs:
+      message:
+        description: "The greeting message"
+        value: ${{ jobs.say-hello.outputs.greeting }}
 
 jobs:
-  hello:
+  say-hello:
     runs-on: ubuntu-latest
+    outputs:
+      greeting: ${{ steps.set-greeting.outputs.greeting }}
     steps:
-      - name: checkout
-        uses: actions/checkout@4.2.2
-        with:
-           repository: srinathMandha/JavaActions
-      - run: echo "👋 Hello from App1 Repo!"
+      - name: Set greeting message
+        id: set-greeting
+        run: echo "greeting=Hello from reusable workflow" >> "$GITHUB_OUTPUT"
